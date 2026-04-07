@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { EscalationPolicyModel, type EscalationPolicyDocument } from "@/db/models/index.js";
-import type { IEscalationPoliciesRepository } from "@/repositories/index.js";
+import type { IEscalationPoliciesRepository } from "./IEscalationPoliciesRepository.js";
 import type { EscalationPolicy, EscalationStep } from "@/types/escalation.js";
 import { AppError } from "@/utils/AppError.js";
 
@@ -37,7 +37,14 @@ class MongoEscalationPoliciesRepository implements IEscalationPoliciesRepository
 	};
 
 	create = async (data: Partial<EscalationPolicy>): Promise<EscalationPolicy> => {
-		const policy = await EscalationPolicyModel.create({ ...data });
+		const docData = {
+			...data,
+			steps: (data.steps ?? []).map((step) => ({
+				delayMs: step.delayMs,
+				notificationIds: (step.notificationIds ?? []).map((id) => new mongoose.Types.ObjectId(id)),
+			})),
+		};
+		const policy = await EscalationPolicyModel.create(docData);
 		if (!policy) {
 			throw new AppError({ message: "Failed to create escalation policy", status: 500 });
 		}
@@ -63,12 +70,19 @@ class MongoEscalationPoliciesRepository implements IEscalationPoliciesRepository
 	};
 
 	updateById = async (id: string, teamId: string, updateData: Partial<EscalationPolicy>): Promise<EscalationPolicy> => {
+		const setData: Record<string, unknown> = { ...updateData };
+		if (updateData.steps) {
+			setData.steps = updateData.steps.map((step) => ({
+				delayMs: step.delayMs,
+				notificationIds: (step.notificationIds ?? []).map((nid) => new mongoose.Types.ObjectId(nid)),
+			}));
+		}
 		const policy = await EscalationPolicyModel.findOneAndUpdate(
 			{
 				_id: new mongoose.Types.ObjectId(id),
 				teamId: new mongoose.Types.ObjectId(teamId),
 			},
-			{ $set: updateData },
+			{ $set: setData },
 			{ new: true, runValidators: true }
 		);
 		if (!policy) {
