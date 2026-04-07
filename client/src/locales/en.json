@@ -167,6 +167,7 @@
 				"incidents": "Incidents",
 				"statusPages": "Status pages",
 				"maintenance": "Maintenance",
+				"escalationPolicies": "Escalation Policies",
 				"logs": "Logs",
 				"settings": "Settings"
 			},
@@ -542,6 +543,14 @@
 				"notifications": {
 					"description": "Select the notification channels you want to use",
 					"title": "Notifications"
+				},
+				"escalationPolicy": {
+					"title": "Escalation policy",
+					"description": "Assign an escalation policy to automatically notify the right people as an incident persists.",
+					"option": {
+						"label": "Escalation policy",
+						"placeholder": "None"
+					}
 				},
 				"type": {
 					"description": "Select the type of check to perform",
@@ -1317,6 +1326,49 @@
 					"Track historical uptime and reliability trends"
 				],
 				"title": "An uptime monitor is used to:"
+			}
+		},
+		"escalationPolicies": {
+			"fallback": {
+				"title": "Escalation policies are used to:",
+				"checks": [
+					"Notify the right people as incidents persist",
+					"Define time-based alert steps",
+					"Escalate unresolved issues automatically"
+				],
+				"actionButton": "Create a policy"
+			},
+			"table": {
+				"headers": {
+					"steps": "Steps"
+				}
+			},
+			"form": {
+				"name": {
+					"title": "Policy name",
+					"description": "A descriptive name for this escalation policy",
+					"option": {
+						"label": "Policy name",
+						"placeholder": "e.g. On-call Escalation"
+					}
+				},
+				"steps": {
+					"title": "Escalation steps",
+					"description": "Define the time-based steps for this policy. Each step triggers notifications after the specified delay from when the incident started.",
+					"option": {
+						"delay": {
+							"label": "Alert after"
+						},
+						"unit": {
+							"label": "Unit"
+						},
+						"notifications": {
+							"label": "Notify channels",
+							"placeholder": "Select notification channels"
+						},
+						"addStep": "Add step"
+					}
+				}
 			}
 		}
 	}
