@@ -108,6 +108,8 @@ import {
 	IIncidentsRepository,
 	ITeamsRepository,
 	IMaintenanceWindowsRepository,
+	MongoEscalationPoliciesRepository,
+	IEscalationPoliciesRepository,
 } from "@/repositories/index.js";
 import { ILogger } from "@/utils/logger.js";
 
@@ -146,6 +148,7 @@ export type InitializedServices = {
 	incidentsRepository: IIncidentsRepository;
 	teamsRepository: ITeamsRepository;
 	maintenanceWindowsRepository: IMaintenanceWindowsRepository;
+	escalationPoliciesRepository: IEscalationPoliciesRepository;
 };
 
 export const initializeServices = async ({
@@ -178,6 +181,7 @@ export const initializeServices = async ({
 	const incidentsRepository = new MongoIncidentRepository();
 	const teamsRepository = new MongoTeamsRepository();
 	const maintenanceWindowsRepository = new MongoMaintenanceWindowsRepository();
+	const escalationPoliciesRepository = new MongoEscalationPoliciesRepository();
 
 	// Network providers
 	const pingProvider = new PingProvider(ping);
@@ -343,6 +347,7 @@ export const initializeServices = async ({
 		incidentsRepository,
 		teamsRepository,
 		maintenanceWindowsRepository,
+		escalationPoliciesRepository,
 	};
 
 	return services;
