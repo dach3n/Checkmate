@@ -39,6 +39,7 @@ import {
 	supportsGeoCheck,
 } from "@/Types/Monitor";
 import type { Notification } from "@/Types/Notification";
+import type { EscalationPolicy } from "@/Types/EscalationPolicy";
 import type { MonitorFormData } from "@/Validation/monitor";
 
 interface GeneralSettingsConfig {
@@ -191,6 +192,7 @@ const CreateMonitorPage = () => {
 	);
 
 	const { data: notifications } = useGet<Notification[]>("/notifications/team");
+	const { data: escalationPolicies } = useGet<EscalationPolicy[]>("/escalation-policies/team");
 	const { data: games } = useGet<GamesMap>("/monitors/games");
 
 	const { schema, defaults } = useMonitorForm({
@@ -761,6 +763,38 @@ const CreateMonitorPage = () => {
 								</Stack>
 							);
 						}}
+					/>
+				}
+			/>
+
+			<ConfigBox
+				title={t("pages.createMonitor.form.escalationPolicy.title")}
+				subtitle={t("pages.createMonitor.form.escalationPolicy.description")}
+				rightContent={
+					<Controller
+						name="escalationPolicyId"
+						control={control}
+						render={({ field }) => (
+							<Select
+								fieldLabel={t(
+									"pages.createMonitor.form.escalationPolicy.option.label"
+								)}
+								value={field.value ?? ""}
+								onChange={field.onChange}
+							>
+								<MenuItem value="">
+									{t("pages.createMonitor.form.escalationPolicy.option.placeholder")}
+								</MenuItem>
+								{(escalationPolicies ?? []).map((policy) => (
+									<MenuItem
+										key={policy.id}
+										value={policy.id}
+									>
+										{policy.name}
+									</MenuItem>
+								))}
+							</Select>
+						)}
 					/>
 				}
 			/>

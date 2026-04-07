@@ -17,6 +17,7 @@ import {
 	User,
 	Lock,
 	Users,
+	Siren,
 } from "lucide-react";
 
 export const getMenu = (t: Function) => {
@@ -60,6 +61,11 @@ export const getMenu = (t: Function) => {
 			name: t("components.sidebar.menu.maintenance"),
 			path: "maintenance",
 			icon: <Icon icon={Wrench} />,
+		},
+		{
+			name: t("components.sidebar.menu.escalationPolicies"),
+			path: "escalation-policies",
+			icon: <Icon icon={Siren} />,
 		},
 		{
 			name: t("components.sidebar.menu.logs"),
