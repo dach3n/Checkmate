@@ -54,6 +54,24 @@ const startApp = async () => {
 		logger.info({ message: `Server started on port:${env.PORT}` });
 	});
 
+	server.on("error", (error: NodeJS.ErrnoException) => {
+		if (error.code === "EADDRINUSE") {
+			logger.error({
+				message: `Port ${env.PORT} is already in use. Is another instance of the server running?`,
+				service: SERVICE_NAME,
+				method: "startApp",
+			});
+		} else {
+			logger.error({
+				message: error.message,
+				service: SERVICE_NAME,
+				method: "startApp",
+				stack: error.stack,
+			});
+		}
+		process.exit(1);
+	});
+
 	initShutdownListener(server, services);
 };
 
