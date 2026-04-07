@@ -41,7 +41,7 @@ class MongoEscalationPoliciesRepository implements IEscalationPoliciesRepository
 			...data,
 			steps: (data.steps ?? []).map((step) => ({
 				delayMs: step.delayMs,
-				notificationIds: step.notificationIds.map((id) => new mongoose.Types.ObjectId(id)),
+				notificationIds: (step.notificationIds ?? []).map((id) => new mongoose.Types.ObjectId(id)),
 			})),
 		};
 		const policy = await EscalationPolicyModel.create(docData);
@@ -74,7 +74,7 @@ class MongoEscalationPoliciesRepository implements IEscalationPoliciesRepository
 		if (updateData.steps) {
 			setData.steps = updateData.steps.map((step) => ({
 				delayMs: step.delayMs,
-				notificationIds: step.notificationIds.map((nid) => new mongoose.Types.ObjectId(nid)),
+				notificationIds: (step.notificationIds ?? []).map((nid) => new mongoose.Types.ObjectId(nid)),
 			}));
 		}
 		const policy = await EscalationPolicyModel.findOneAndUpdate(
