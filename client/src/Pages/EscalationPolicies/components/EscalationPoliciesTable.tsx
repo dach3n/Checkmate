@@ -10,7 +10,7 @@ import { useTheme } from "@mui/material";
 
 interface EscalationPoliciesTableProps {
 	escalationPolicies: EscalationPolicy[];
-	setSelectedPolicy: Function;
+	setSelectedPolicy: (policy: EscalationPolicy | null) => void;
 }
 
 export const EscalationPoliciesTable = ({

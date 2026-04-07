@@ -16,7 +16,7 @@ import { useEscalationPolicyForm } from "@/Hooks/useEscalationPolicyForm";
 import { useGet, usePost, usePatch } from "@/Hooks/UseApi";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Notification } from "@/Types/Notification";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
+import { useForm, Controller, useFieldArray, type FieldErrors } from "react-hook-form";
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { Trash2, Plus } from "lucide-react";
@@ -82,7 +82,7 @@ const CreateEscalationPolicyPage = () => {
 
 	const isLoading = isPosting || isPatching;
 
-	const onError = (errors: any) => {
+	const onError = (errors: FieldErrors<EscalationPolicyFormData>) => {
 		logger.error("Escalation policy form submission failed", undefined, { errors });
 	};
 
