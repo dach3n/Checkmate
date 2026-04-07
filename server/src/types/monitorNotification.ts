@@ -1,11 +1,20 @@
-// monitorNotification.ts
+// Define escalation configuration types for monitor-notification associations
 
-export type MonitorNotificationType = {
+interface MonitorNotificationEscalation {
     id: string;
-    timestamp: string;
-    severity: 'info' | 'warning' | 'error';
-    message: string;
-    context?: Record<string, any>;
-};
+    notificationId: string;
+    rule: EscalationRule;
+}
 
-export const monitorNotifications: MonitorNotificationType[] = [];
+interface EscalationRule {
+    id: string;
+    criteria: string;
+    actions: Array<string>;
+}
+
+interface MonitorNotificationConfig {
+    id: string;
+    escalation: MonitorNotificationEscalation;
+    createdAt: Date;
+    updatedAt: Date;
+}
