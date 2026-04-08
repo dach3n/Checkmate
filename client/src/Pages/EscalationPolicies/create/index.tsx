@@ -1,4 +1,5 @@
 import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
 import MenuItem from "@mui/material/MenuItem";
 import { logger } from "@/Utils/logger";
 import Typography from "@mui/material/Typography";
@@ -214,6 +215,19 @@ const CreateEscalationPolicyPage = () => {
 												fieldLabel={t(
 													"pages.escalationPolicies.form.steps.option.notifications.label"
 												)}
+												renderTags={(tagValue, getTagProps) =>
+													tagValue.map((option, index) => {
+														const { key, ...tagProps } = getTagProps({ index });
+														return (
+															<Chip
+																key={key}
+																label={option.name}
+																size="small"
+																{...tagProps}
+															/>
+														);
+													})
+												}
 											/>
 										);
 									}}

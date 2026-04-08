@@ -45,7 +45,7 @@ export const AutoCompleteInput = ({
 			}
 			renderInput={renderInput || defaultRenderInput}
 			getOptionKey={(option) => option.id}
-			renderTags={() => null}
+			renderTags={props.renderTags ?? (() => null)}
 			renderOption={(props, option, { selected }) => {
 				const { key, ...optionProps } = props;
 				return (
